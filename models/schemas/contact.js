@@ -10,10 +10,11 @@ const contactSchema = Schema({
     required: [true, "Set name for contact"],
   },
   email: {
-      type: String,
-        required: true,
-        unique: true,
-        match: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    type: String,
+    required: true,
+    unique: true,
+    match:
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
   phone: {
     type: String,
@@ -22,6 +23,10 @@ const contactSchema = Schema({
     type: Boolean,
     default: false,
   },
+  owner: {
+    type: SchemaTypes.ObjectId,
+    ref: "user",
+  },
 });
 
 const joiSchema = Joi.object({
@@ -29,6 +34,7 @@ const joiSchema = Joi.object({
   email: Joi.string().pattern(new RegExp(emailRegexp)),
   phone: Joi.string().required(),
   favorite: Joi.string(),
+  owner: Joi.string().required()
 });
 
 module.exports = { contactSchema, joiSchema };
