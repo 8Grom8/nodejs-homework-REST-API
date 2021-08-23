@@ -16,8 +16,9 @@ app.use(express.json())
 app.use(logger(formatsLogger))
 
 app.use('/api/v1/contacts', api.contacts);
+app.use("/api/v1/auth", api.auth);
 
-app.use((req, res) => {
+app.use((_, res) => {
   res.status(404).json({ message: 'Not found' })
 })
 
