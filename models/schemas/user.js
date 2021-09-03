@@ -1,6 +1,7 @@
 const { Schema } = require("mongoose");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
+const gravatar = require('gravatar');
 
 const password = "password";
 const emailRegex =
@@ -25,6 +26,12 @@ const userSchema = Schema({
     type: String,
     default: null,
   },
+  avatarURL:{
+    type: String,
+    default: function () {
+      return gravatar.url(this.email, {s: '250'}, true)
+    },
+},
 });
 
 userSchema.methods.sestPassword = function (password) {

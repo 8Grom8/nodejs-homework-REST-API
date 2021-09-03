@@ -9,5 +9,6 @@ const router = express.Router();
 router.post("/signup", validation(joiSchema), ctrl.signup);
 router.post("/signin", ctrl.signin);
 router.get("/logout", authenicate, ctrl.logout);
+router.patch("/avatars", authenicate, uploadMiddleware.single('avatar'), ctrl.uploadAvatar);
 
 module.exports = router;
