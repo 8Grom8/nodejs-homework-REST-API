@@ -26,12 +26,20 @@ const userSchema = Schema({
     type: String,
     default: null,
   },
-  avatarURL:{
+  avatarURL: {
     type: String,
     default: function () {
-      return gravatar.url(this.email, {s: '250'}, true)
+      return gravatar.url(this.email, { s: "250" }, true);
     },
-},
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verifyToken: {
+    type: String,
+    required: [true, "Verify token is required"],
+  },
 });
 
 userSchema.methods.sestPassword = function (password) {
