@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
+const path = require("path");
+const api = require('./api');
 
 require("dotenv").config();
 
-const api = require('./api');
-
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 

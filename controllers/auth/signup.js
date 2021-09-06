@@ -1,4 +1,5 @@
 const { users: service } = require("../../services");
+const { sendMail } = require("../../utils");
 
 const signup = async (req, res, next) => {
   try {
@@ -11,11 +12,20 @@ const signup = async (req, res, next) => {
         message: "Alredy register",
       });
     }
-    const newUser = await service.add(req.body);
+const verifyToken = "ghgsdfhjddd";
+const { email } = await service.add({ ...req.body, verifyToken });
+
+const { URL } = process.env;
+const email = {
+  to: email,
+  subject: "Verify email",
+  html: `<a href="${URL}/api/v1/auth/verify/${verifyToken}" target="_blank">Verify email</a>`,
+};
+await sendMail(email);
     res.status(201).json({
       status: "success",
       code: 201,
-      message: "Success register",
+      message: "Success register. Please verify email",
     });
   } catch (error) {}
 };
